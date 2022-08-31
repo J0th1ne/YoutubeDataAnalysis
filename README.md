@@ -1,4 +1,4 @@
-# SQL Exploration - Youtube Videos and Comments Data Analysis
+# SQL Exploration - Popularity of Youtube Videos Data Analysis
 Project Date: August 30, 2022
 
 ## Objective
