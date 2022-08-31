@@ -11,4 +11,9 @@ The datasets were collected from [Kaggle](https://www.kaggle.com/datasets/advayp
 - Data Cleansing
 - Data Analysis
 
-##
+## Analysis Summary
+
+## Project Files
+- YoutubeDataAnalysis.sql: Contains Cleanup, Dataset Descriptions and SQL Queries of Analysis
+- comments.xlsx: Comments Table Dataset
+- videos-stats.xlsx: VideoStats Table Dataset
