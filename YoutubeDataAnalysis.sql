@@ -1,21 +1,21 @@
 -- CLEAN UP: Removing Duplicates in VideoStats Table
-WITH cte AS (
-    SELECT 
+With cte as (
+    Select 
          VideoStats.VideoId, 
 		 VideoStats.VTitle,
-        ROW_NUMBER() OVER (
-            PARTITION BY 
+        row_number() over (
+            Partition by 
                  VideoStats.VideoId,
 				 VideoStats.VTitle
-            ORDER BY 
+            Order by
                  VideoStats.VideoId,
 				 VideoStats.VTitle
-        ) row_num
-     FROM 
+        ) row
+     From 
         dbo.VideoStats
 )
-DELETE FROM cte
-WHERE row_num > 1;
+Delete From cte
+Where row > 1;
 
 
 -- Selects All the Data to be Worked With
@@ -81,29 +81,37 @@ WHERE row_num > 1;
 	Order By AverageSentiment asc;
 
 	-- Frequency Histogram 
-	Select '0.00 - 0.25' as Category, Count(AverageSentiment) as Frequency from #sentiments
-	where AverageSentiment between 0 and 0.25
+	Select '0.00 - 0.25' as Category, Count(AverageSentiment) as Frequency 
+	From #sentiments
+	Where AverageSentiment between 0 and 0.25
 	Union
-	Select '0.26 - 0.50' as Category, Count(AverageSentiment) as Frequency from #sentiments
-	where AverageSentiment between 0.26 and 0.50
+	Select '0.26 - 0.50' as Category, Count(AverageSentiment) as Frequency 
+	From #sentiments
+	Where AverageSentiment between 0.26 and 0.50
 	Union
-	Select '0.51 - 0.75' as Category, Count(AverageSentiment) as Frequency from #sentiments
-	where AverageSentiment between 0.51 and 0.75
+	Select '0.51 - 0.75' as Category, Count(AverageSentiment) as Frequency 
+	From #sentiments
+	Where AverageSentiment between 0.51 and 0.75
 	Union
-	Select '0.76 - 1.00' as Category, Count(AverageSentiment) as Frequency from #sentiments
-	where AverageSentiment between 0.76 and 1.0
+	Select '0.76 - 1.00' as Category, Count(AverageSentiment) as Frequency 
+	From #sentiments
+	Where AverageSentiment between 0.76 and 1.0
 	Union
-	Select '1.01 - 1.25' as Category, Count(AverageSentiment) as Frequency from #sentiments
-	where AverageSentiment between 1.01 and 1.25
+	Select '1.01 - 1.25' as Category, Count(AverageSentiment) as Frequency 
+	From #sentiments
+	Where AverageSentiment between 1.01 and 1.25
 	Union
-	Select '1.26 - 1.50' as Category, Count(AverageSentiment) as Frequency from #sentiments
-	where AverageSentiment between 1.26 and 1.50
+	Select '1.26 - 1.50' as Category, Count(AverageSentiment) as Frequency 
+	From #sentiments
+	Where AverageSentiment between 1.26 and 1.50
 	Union
-	Select '1.51 - 1.75' as Category, Count(AverageSentiment) as Frequency from #sentiments
-	where AverageSentiment between 1.51 and 1.75
+	Select '1.51 - 1.75' as Category, Count(AverageSentiment) as Frequency 
+	From #sentiments
+	Where AverageSentiment between 1.51 and 1.75
 	Union
-	Select '1.76 - 2.00' as Category, Count(AverageSentiment) as Frequency from #sentiments
-	where AverageSentiment between 1.76 and 2.0
+	Select '1.76 - 2.00' as Category, Count(AverageSentiment) as Frequency 
+	From #sentiments
+	Where AverageSentiment between 1.76 and 2.0
 
 -- Percentage of Likes from Total Views of Each Youtube Video Ordered from Highest to Lowest Percentage
 	Select VId, VTitle, Likes, Views, ((Likes/Views)*100) as LikePercentage
@@ -148,10 +156,6 @@ WHERE row_num > 1;
 	Group By VideoStats.VideoId, VideoStats.VTitle, VideoStats.Likes, VideoStats.Views
 	Order By PositiveCount desc
 
-	Select * from dbo.VideoStats
-	inner join dbo.Comments on Comments.VideoId = VideoStats.VideoId
-	where VideoStats.VideoId = '7eh4d6sabA0'
-
 -- Number of Negative Comments Per Video Ordered by Highest Count to Lowest Count
 	Select VideoStats.VideoId, VideoStats.VTitle, VideoStats.Likes, VideoStats.Views, COUNT(Comments.Sentiment) as NegativeCount
 	From dbo.VideoStats
@@ -169,7 +173,8 @@ WHERE row_num > 1;
 	Order By NeutralCount desc
 
 -- Text Generation, Comments Starting with "Thank you"
-	Select COUNT(CommentId) as CommentCount from dbo.Comments
+	Select COUNT(CommentId) as CommentCount 
+	From dbo.Comments
 	Where Comment like 'thank you%'
 
 -- Further Analysis To Be Added: Predicting Video Likes from Comments Table Data
