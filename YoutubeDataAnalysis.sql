@@ -1,3 +1,10 @@
+/*
+	Jothine Nandakumar
+	Title: Youtube Data Analysis
+	Date Created: August 30, 2022
+	Date Updated: September 1, 2022
+*/
+
 -- CLEAN UP: Removing Duplicates in VideoStats Table
 With cte as (
     Select 
@@ -17,6 +24,13 @@ With cte as (
 Delete From cte
 Where row > 1;
 
+-- CLEAN UP: Removing Videos With Likes < 0
+Delete From VideoStats
+Where Likes < 0
+
+-- CLEAN UP: Removing Videos Where Likes is NULL
+Delete From VideoStats
+Where Likes is Null
 
 -- Selects All the Data to be Worked With
 
@@ -146,7 +160,7 @@ Where row > 1;
 	Full Join cte_pos_comments as pos on pos.id = neg.id
 	Full Join cte_neut_comments as neut on neut.id = neg.id
 	Where neg.id is not null and pos.id is not null and neut.id is not null
-	Order By Positives desc
+	Order By Positives, Neutrals, Negatives desc
 
 -- Number of Positive Comments Per Video Ordered by Highest Count to Lowest Count
 	Select VideoStats.VideoId, VideoStats.VTitle, COUNT(Comments.Sentiment) as PositiveCount
@@ -178,4 +192,3 @@ Where row > 1;
 	Where Comment like 'thank you%'
 
 -- Further Analysis To Be Added: Predicting Video Likes from Comments Table Data
-
